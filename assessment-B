@@ -1,58 +1,10 @@
-/**
-* if the Preload feature is enabled, the rocket_clean_domain() function 
-* will also trigger the preloading process right after the cache was cleared
-*
-* Replace https://example.com/page_url_1 with the specific URL, you want to clear and preload
-* Copy and edit the line for all the URLs you want to clear and preload
+Here are the steps on how to clear cache via cron job - 
+ 
+1. Upload this file(given from assessment-A) to your WordPress installation's root ( where wp-config.php and wp-load.php are located).
 
-<?php
+2. If you place it in a different location, you need to edit the path in require( 'wp-load.php' ); above to match its location.
 
-// Load WordPress.
-require( 'wp-load.php' );
+3. Make sure to specify the correct path to your new file rocket-clean-domain.php in your cron job settings. Check this video https://recordit.co/cl2YCoMCzu as guide.
+ 
+Note: if the Preload feature is enabled, the rocket_clean_domain() function will also trigger the preloading process right after the cache was cleared. 
 
-define( 'WP_USE_THEMES', false );
-
-// Add one page/post per line.
-$pages_to_clean_preload = [
-		'https://example.com/page_url_1',//copy this line as many times as necessary.
-		'https://example.com/page_url_2',//copy this line as many times as necessary.
-		];
-
-if ( function_exists( 'rocket_clean_post' ) ) {
-
-	foreach( $pages_to_clean_preload as $page_to_clean) {
-		rocket_clean_post( url_to_postid ( $page_to_clean ) );
-	}
-}
-
-if ( function_exists( 'get_rocket_option' ) ) {
-	
-	if( 1 == get_rocket_option( 'manual_preload' ) ) {
-		
-		$args = array();
-
-		if( 1 == get_rocket_option( 'cache_webp' ) ) {
-			$args[ 'headers' ][ 'Accept' ]      	= 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8';
-			$args[ 'headers' ][ 'HTTP_ACCEPT' ] 	= 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8';
-		}
-	
-		// Preload desktop pages/posts.
-		rocket_preload_page( $pages_to_clean_preload, $args );
-		
-		if( 1 == get_rocket_option( 'do_caching_mobile_files' ) ) {
-			$args[ 'headers' ][ 'user-agent' ] 	= 'Mozilla/5.0 (Linux; Android 8.0.0;) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Mobile Safari/537.36';
-		
-			// Preload mobile pages/posts.
-			rocket_preload_page(  $pages_to_clean_preload, $args );
-		}
-  	}
-}
-
-function rocket_preload_page ( $pages_to_preload, $args ){
-	
-	foreach( $pages_to_preload as $page_to_preload ) {
-		wp_remote_get( esc_url_raw ( $page_to_preload ), $args );
-	}
-}<br>
-
-*/
