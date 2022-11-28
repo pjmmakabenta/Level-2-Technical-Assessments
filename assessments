@@ -1,0 +1,33 @@
+/**
+ * In order to run these at specific times each day
+ * you can use a cron job on your server.
+ * 
+ * Actions are the form rocket_clean_domain and rocket_clean_minify
+ * 
+ * check this https://www.youtube.com/watch?v=nJz8ulBhKEs as a quick guide and launch it at whatever time you want.
+ */
+ 
+ /**
+ * Create a PHP file and name it (for example): rocket-clean-domain.php
+ * To clear the cache and preload the whole site, use the following code in your file:
+ 
+ <?php 
+// Load WordPress.
+require( 'wp-load.php' );
+
+// Clear cache.<br>// Also preload the cache if the Preload is enabled.
+if ( function_exists( 'rocket_clean_domain' ) ) {
+	rocket_clean_domain();
+ }
+
+// Clear minified CSS and JavaScript files.
+if ( function_exists( 'rocket_clean_minify' ) ) {
+	rocket_clean_minify();
+}
+
+*/
+
+ /**
+ * Upload this file to your WordPress installation's root ( where wp-config.php and wp-load.php are located).
+ * Note: If you place it in a different location, you need to edit the path in require( 'wp-load.php' ); above to match its location.
+ * Make sure to specify the correct path to your new file rocket-clean-domain.php in your cron job settings.
