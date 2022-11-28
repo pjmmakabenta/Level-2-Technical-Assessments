@@ -31,3 +31,4 @@ if ( function_exists( 'rocket_clean_minify' ) ) {
  * Upload this file to your WordPress installation's root ( where wp-config.php and wp-load.php are located).
  * Note: If you place it in a different location, you need to edit the path in require( 'wp-load.php' ); above to match its location.
  * Make sure to specify the correct path to your new file rocket-clean-domain.php in your cron job settings.
+ */
